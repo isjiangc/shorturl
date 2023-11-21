@@ -1,0 +1,29 @@
+env: local
+urlprefix: http://127.0.0.1:8000/
+http:
+  host: 0.0.0.0
+  port: 8000
+security:
+  api_sign:
+    app_key: 123456
+    app_security: 123456
+  jwt:
+    key: QQYnRFerJTSEcrfB89fw8prOaObmrch8
+data:
+  mysql:
+    user: root:123@tcp(127.0.0.1:3306)/ginblog?charset=utf8mb4&parseTime=True&loc=Local
+  redis:
+    addr: 127.0.0.1:6379
+    password: ""
+    db: 0
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+
+log:
+  log_level: debug
+  encoding: json           # json or console
+  log_file_name: "./storage/logs/server.log"
+  max_backups: 30
+  max_age: 7
+  max_size: 1024
+  compress: true

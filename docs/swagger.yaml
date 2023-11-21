@@ -1,0 +1,370 @@
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  nunu_ginblog_api_v1.DeleteShortUrlStateData:
+    properties:
+      result:
+        type: boolean
+    type: object
+  nunu_ginblog_api_v1.DeleteShortUrlStateResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/nunu_ginblog_api_v1.DeleteShortUrlStateData'
+      message:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.GenerateShortUrlData:
+    properties:
+      shortUrl:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.GenerateShortUrlRequest:
+    properties:
+      destUrl:
+        type: string
+      memo:
+        type: string
+      openType:
+        type: integer
+    type: object
+  nunu_ginblog_api_v1.GenerateShortUrlResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      date:
+        $ref: '#/definitions/nunu_ginblog_api_v1.GenerateShortUrlData'
+      message:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.GetProfileResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/nunu_ginblog_api_v1.GetProfileResponseData'
+      message:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.GetProfileResponseData:
+    properties:
+      nickname:
+        example: alan
+        type: string
+      userId:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.GetShortUrlListResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/nunu_ginblog_internal_model.ShortUrl'
+        type: array
+      message:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.LoginRequest:
+    properties:
+      email:
+        example: 1234@gmail.com
+        type: string
+      password:
+        example: "123456"
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  nunu_ginblog_api_v1.LoginResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/nunu_ginblog_api_v1.LoginResponseData'
+      message:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.LoginResponseData:
+    properties:
+      accessToken:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.RegisterRequest:
+    properties:
+      email:
+        example: 1234@gmail.com
+        type: string
+      password:
+        example: "123456"
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  nunu_ginblog_api_v1.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  nunu_ginblog_api_v1.UpdateShortUrlStateData:
+    properties:
+      result:
+        type: boolean
+    type: object
+  nunu_ginblog_api_v1.UpdateShortUrlStateRequest:
+    properties:
+      enable:
+        type: boolean
+    type: object
+  nunu_ginblog_api_v1.UpdateShortUrlStateResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      date:
+        $ref: '#/definitions/nunu_ginblog_api_v1.UpdateShortUrlStateData'
+      message:
+        type: string
+    type: object
+  nunu_ginblog_internal_model.OpenType:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    type: integer
+    x-enum-varnames:
+    - OpenInAll
+    - OpenInWechat
+    - OpenInDingTalk
+    - OpenInIPhone
+    - OpenInAndroid
+    - OpenInIPad
+    - OpenInSafari
+    - OpenInChrome
+    - OpenInFirefox
+  nunu_ginblog_internal_model.ShortUrl:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      destUrl:
+        type: string
+      id:
+        type: integer
+      memo:
+        type: string
+      openType:
+        $ref: '#/definitions/nunu_ginblog_internal_model.OpenType'
+      shortUrl:
+        type: string
+      updatedAt:
+        type: string
+      valid:
+        type: boolean
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Nunu Example API
+  version: 1.0.0
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/nunu_ginblog_api_v1.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/nunu_ginblog_api_v1.LoginResponse'
+      summary: 账号登录
+      tags:
+      - 用户模块
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: 目前只支持邮箱登录
+      parameters:
+      - description: params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/nunu_ginblog_api_v1.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/nunu_ginblog_api_v1.Response'
+      summary: 用户注册
+      tags:
+      - 用户模块
+  /shorturl:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 页数
+        in: query
+        name: page
+        type: string
+      - description: 每页数
+        in: query
+        name: size
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/nunu_ginblog_api_v1.GetShortUrlListResponse'
+      summary: 分页获取所有短链
+      tags:
+      - 短链模块
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/nunu_ginblog_api_v1.GenerateShortUrlRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/nunu_ginblog_api_v1.GenerateShortUrlResponse'
+      summary: 生成短链
+      tags:
+      - 短链模块
+  /shorturl/{url}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 短链
+        in: path
+        name: url
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/nunu_ginblog_api_v1.DeleteShortUrlStateResponse'
+      summary: 删除短链
+      tags:
+      - 短链模块
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 短链
+        in: path
+        name: url
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/nunu_ginblog_internal_model.ShortUrl'
+      summary: 获取短链信息
+      tags:
+      - 短链模块
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 短链
+        in: path
+        name: url
+        required: true
+        type: string
+      - description: params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/nunu_ginblog_api_v1.UpdateShortUrlStateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/nunu_ginblog_api_v1.UpdateShortUrlStateResponse'
+      summary: 更新短链状态
+      tags:
+      - 短链模块
+  /user:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/nunu_ginblog_api_v1.GetProfileResponse'
+      security:
+      - Bearer: []
+      summary: 获取用户信息
+      tags:
+      - 用户模块
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
