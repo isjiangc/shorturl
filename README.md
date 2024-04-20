@@ -3,7 +3,7 @@
 shorturl 是go语言基于nunu开发的短链接服务
 
 ## 项目介绍
-reggie_go基于Nunu脚手架开发的瑞吉外卖的go语言接口
+shorturl 基于Nunu脚手架开发的短链接服务
 
 ## 功能
 
